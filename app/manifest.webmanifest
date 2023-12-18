@@ -1,6 +1,6 @@
 {
-  "name": "Granada Next App",
-  "short_name": "Granada",
+  "name": "Next App with Auth",
+  "short_name": "Next App",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FFE9D2",

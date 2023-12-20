@@ -1,5 +1,4 @@
-"use client";
-
+// "use client";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -12,6 +11,8 @@ import toast from "react-hot-toast";
 import InputField from "@/app/_components/formInputs/InputField";
 
 export default function Login() {
+  let test = "tell";
+
   const router = useRouter();
   // 1. Default values
   const defaultValues = {

@@ -1,4 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import type { Role } from "@/types/globals";
+import { hasRoutePermission } from "@/lib/navigation-permissions";
 
 // Define public routes that don't require authentication
 const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
@@ -8,6 +11,18 @@ export default clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
     await auth.protect();
   }
+  // For authenticated users, check role-based permissions
+  const path = request.nextUrl.pathname;
+  const userRole = (await auth()).sessionClaims?.metadata?.userRole as
+    | Role
+    | undefined;
+
+  // Check if user has permission for this route
+  if (!hasRoutePermission(path, userRole)) {
+    // Redirect to unauthorized page
+    return NextResponse.redirect(new URL("/unauthorized", request.url));
+  }
+  return NextResponse.next();
 });
 
 export const config = {

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useClerk } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -8,11 +9,23 @@ import { useState, useEffect } from "react";
 export default function Unauthorized() {
   // Add mounted state to prevent hydration mismatch
   const [mounted, setMounted] = useState(false);
+  const { client } = useClerk();
+  console.log("here");
 
   // Set mounted to true after component mounts
   useEffect(() => {
+    const check = async () => {
+      try {
+        console.log(client);
+      } catch (error) {
+        console.error("Error checking session:", error);
+      }
+    };
+    check();
+    // Set mounted to true to avoid hydration mismatch
+    // This is a workaround to prevent hydration mismatch
     setMounted(true);
-  }, []);
+  }, [client]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">

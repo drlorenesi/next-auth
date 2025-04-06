@@ -14,7 +14,7 @@ export default clerkMiddleware(async (auth, request) => {
 
   // For authenticated users, check role-based permissions
   const path = request.nextUrl.pathname;
-  const userRole = (await auth()).sessionClaims?.metadata?.userRole as
+  const userRole = (await auth()).sessionClaims?.metadata?.role as
     | Role
     | undefined;
 

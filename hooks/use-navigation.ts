@@ -8,17 +8,17 @@ import { getFilteredNavigation } from "@/lib/navigation-permissions";
 export function useNavigation() {
   const { isLoaded } = useAuth();
   const { user } = useUser();
-  const userRole = user?.publicMetadata?.userRole as Role | undefined;
+  const role = user?.publicMetadata?.role as Role | undefined;
 
   // Memoize the filtered navigation to prevent unnecessary re-renders
   const filteredNavLinks = useMemo(
-    () => (isLoaded ? getFilteredNavigation(userRole) : []),
-    [userRole, isLoaded]
+    () => (isLoaded ? getFilteredNavigation(role) : []),
+    [role, isLoaded]
   );
 
   return {
     navLinks: filteredNavLinks,
-    userRole,
+    role,
     isLoaded,
   };
 }

@@ -1,8 +1,12 @@
-// Customize session token in Clerk
+// Sessions > Customize session token
 // Claims
 // {
 // 	"metadata": "{{user.public_metadata}}"
 // }
+
+// Users > Metadata
+// role: "admin"
+
 export {};
 
 export type Role = "admin" | "compras" | "ventas" | "user";
@@ -10,7 +14,7 @@ export type Role = "admin" | "compras" | "ventas" | "user";
 declare global {
   interface CustomJwtSessionClaims {
     metadata: {
-      userRole?: Role;
+      role?: Role;
     };
   }
 }

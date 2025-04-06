@@ -118,22 +118,18 @@ navLinks.forEach((link) => {
 });
 
 // Utility function to filter navigation links based on user role
-export function getFilteredNavigation(
-  userRole?: Role | null
-): NavigationLink[] {
-  if (!userRole) return [];
+export function getFilteredNavigation(role?: Role | null): NavigationLink[] {
+  if (!role) return [];
 
   return (
     navLinks
-      .filter((link) => link.roles.includes(userRole))
+      .filter((link) => link.roles.includes(role))
       .map((link) => {
         // If the link has a submenu, filter the submenu items too
         if (link.submenu) {
           return {
             ...link,
-            submenu: link.submenu.filter((item) =>
-              item.roles.includes(userRole)
-            ),
+            submenu: link.submenu.filter((item) => item.roles.includes(role)),
           };
         }
         return link;
@@ -144,11 +140,8 @@ export function getFilteredNavigation(
 }
 
 // Helper function to check if a user has permission for a specific route
-export function hasRoutePermission(
-  route: string,
-  userRole?: Role | null
-): boolean {
-  if (!userRole) return false;
+export function hasRoutePermission(route: string, role?: Role | null): boolean {
+  if (!role) return false;
 
   // Find matching route in permissions map (exact match or nested route)
   const matchingRoute = Object.keys(routePermissions).find(
@@ -158,5 +151,5 @@ export function hasRoutePermission(
   if (!matchingRoute) return true; // If route isn't in the permissions map, allow access
 
   const requiredRoles = routePermissions[matchingRoute];
-  return requiredRoles.length === 0 || requiredRoles.includes(userRole);
+  return requiredRoles.length === 0 || requiredRoles.includes(role);
 }

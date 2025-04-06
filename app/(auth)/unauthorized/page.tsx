@@ -10,7 +10,6 @@ export default function Unauthorized() {
   // Add mounted state to prevent hydration mismatch
   const [mounted, setMounted] = useState(false);
   const { client } = useClerk();
-  console.log("here");
 
   // Set mounted to true after component mounts
   useEffect(() => {

@@ -144,16 +144,14 @@ export function getFilteredNavigation(role?: Role | null): NavigationLink[] {
 export async function isAuthorized(request: Request, role: Role) {
   const { pathname } = new URL(request.url);
 
-  // Example: Check if the user has the required role for the route
   const matchingRoute = Object.keys(routePermissions).find(
     (r) => pathname === r || (pathname.startsWith(r + "/") && r !== "/")
   );
 
-  if (!matchingRoute) {
-    console.log("No matching route found. Defaulting to allow access.");
-    return true; // If route isn't in the permissions map, allow access
-  }
+  // If route isn't in the permissions map, allow access
+  if (!matchingRoute) return true;
 
+  // If route is in the permissions map, check if the user has the required role
   const requiredRoles = routePermissions[matchingRoute];
   const hasPermission =
     requiredRoles.length === 0 || requiredRoles.includes(role);

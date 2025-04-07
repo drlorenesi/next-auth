@@ -7,6 +7,7 @@ import { dark } from "@clerk/themes";
 import { esMX } from "@/lib/localization/es-MX";
 // import { enUS } from "@/lib/localization/en-US";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +51,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster richColors closeButton />
           </ThemeProvider>
         </body>
       </html>

@@ -139,40 +139,24 @@ export function getFilteredNavigation(role?: Role | null): NavigationLink[] {
   );
 }
 
-// Helper function to check if a user has permission for a specific route
-// export function hasRoutePermission(route: string, role?: Role | null): boolean {
-//   if (!role) return false;
+// Authorization function to check if a user has access to a route
+// based on their role
+export async function isAuthorized(request: Request, role: Role) {
+  const { pathname } = new URL(request.url);
 
-//   // Explicitly allow certain routes
-//   const alwaysAllowedRoutes = ["/"];
-//   if (alwaysAllowedRoutes.includes(route)) {
-//     return true;
-//   }
-
-//   // Find matching route in permissions map (exact match or nested route)
-//   const matchingRoute = Object.keys(routePermissions).find(
-//     (r) => route === r || (route.startsWith(r + "/") && r !== "/")
-//   );
-
-//   if (!matchingRoute) return true; // If route isn't in the permissions map, allow access
-
-//   const requiredRoles = routePermissions[matchingRoute];
-//   return requiredRoles.length === 0 || requiredRoles.includes(role);
-// }
-
-export function hasRoutePermission(route: string, role?: Role | null): boolean {
-  console.log("- Checking route permission...");
-  console.log("- Route:", route);
-  console.log("- Role:", role);
-  // Explicitly allow certain routes
-  const alwaysAllowedRoutes = ["/"];
-  if (alwaysAllowedRoutes.includes(route)) return true;
-
-  // Find matching route in permissions map (exact match or nested route)
+  // Example: Check if the user has the required role for the route
   const matchingRoute = Object.keys(routePermissions).find(
-    (r) => route === r || (route.startsWith(r + "/") && r !== "/")
+    (r) => pathname === r || (pathname.startsWith(r + "/") && r !== "/")
   );
-  console.log("- Matching route:", matchingRoute);
 
-  return true; // Default to true for all routes
+  if (!matchingRoute) {
+    console.log("No matching route found. Defaulting to allow access.");
+    return true; // If route isn't in the permissions map, allow access
+  }
+
+  const requiredRoles = routePermissions[matchingRoute];
+  const hasPermission =
+    requiredRoles.length === 0 || requiredRoles.includes(role);
+
+  return hasPermission;
 }

@@ -78,6 +78,11 @@ export const navLinks: NavigationLink[] = [
         roles: ["admin", "compras"],
       },
       {
+        href: "/formularios/ingreso-b",
+        label: "Ingreso B",
+        roles: ["admin", "compras"],
+      },
+      {
         href: "/formularios/data-fetching",
         label: "Data Fetching",
         roles: ["admin", "compras"],

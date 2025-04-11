@@ -11,6 +11,7 @@
 
 ## Misc
 
+- [ ] Error message when Clerk is not available
 - [ ] Create Delta .svg component
 
 Adding components using shadcn:

@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -24,24 +23,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2, X } from "lucide-react";
-
-// Define the form schema using zod
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "El nombre debe tener al menos 2 caracteres.",
-  }),
-  country: z.string().min(1, {
-    message: "Por favor selecciona un país.",
-  }),
-  startDate: z
-    .date({
-      required_error: "Por favor selecciona una fecha de inicio.",
-    })
-    .transform((date) => format(date, "yyyy-MM-dd")),
-  interests: z.array(z.string()).min(1, {
-    message: "Por favor selecciona al menos un interés.",
-  }),
-});
 
 // Array of countries
 const countries = [
@@ -68,51 +49,37 @@ const interests = [
 const firstDayOfMonth = new Date();
 firstDayOfMonth.setDate(1);
 
-// Infer the type from the schema
-// type FormValues = z.infer<typeof formSchema>
-
-// Create a separate schema for the form state (with Date object)
-const formStateSchema = z.object({
-  name: z.string().min(2),
-  country: z.string().min(1),
-  startDate: z.date(),
-  interests: z.array(z.string()).min(1),
+// Define the form schema
+const FormSchema = z.object({
+  name: z.string().min(2, {
+    message: "El nombre debe tener al menos 2 caracteres.",
+  }),
+  country: z.string().min(1, {
+    message: "Por favor selecciona un país.",
+  }),
+  interests: z.array(z.string()).min(1, {
+    message: "Por favor selecciona al menos un interés.",
+  }),
 });
-
-type FormState = z.infer<typeof formStateSchema>;
 
 export default function TextInputForm() {
   // Initialize the form with react-hook-form
-  const form = useForm<FormState>({
-    resolver: zodResolver(formStateSchema),
+  const form = useForm({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
       name: "",
       country: "",
-      startDate: firstDayOfMonth,
       interests: [],
     },
   });
+
   const { isSubmitting } = form.formState;
 
   // Define the submit handler
-  async function onSubmit(data: FormState) {
-    try {
-      // Transform the data using our schema
-      const validatedData = formSchema.parse(data);
-
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Log the transformed data that would be sent to the server
-      console.log("Data to submit:", validatedData);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        // Log the validation errors
-        console.error("Validation errors:", error.errors);
-      } else {
-        // Handle other errors
-        console.error("Unexpected error:", error);
-      }
-    }
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Log the transformed data that would be sent to the server
+    console.log("Data to submit:", data);
   }
 
   return (

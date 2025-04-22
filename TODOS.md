@@ -13,6 +13,7 @@
 
 - [ ] Error message when Clerk is not available
 - [ ] Create Delta .svg component
+- [ ] Proper way to work with images (cloud, local, other)
 
 Adding components using shadcn:
 

@@ -23,45 +23,49 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
 
-// Define the schema with proper handling for both Date objects and strings
-const FormSchema = z.object({
-  fechaIni: z.date({
-    required_error: "Por favor selecciona una fecha de inicio.",
-    invalid_type_error: "Por favor proporciona una fecha válida.",
-  }),
-});
+// Define the form schema
+const FormSchema = z
+  .object({
+    fechaIni: z.date({
+      required_error: "Por favor selecciona una fecha.",
+      invalid_type_error: "Por favor proporciona una fecha válida.",
+    }),
+    fechaFin: z.date({
+      required_error: "Por favor selecciona una fecha.",
+      invalid_type_error: "Por favor proporciona una fecha válida.",
+    }),
+  })
+  .refine((data) => data.fechaIni <= data.fechaFin, {
+    message: "La fecha de inicio no puede ser posterior a la fecha final.",
+    path: ["fechaIni"],
+  });
 
 export default function CalendarForm() {
-  // Add state to control the popover
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-
+  // Initialize the form with react-hook-form
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      fechaIni: undefined,
+      fechaIni: new Date(new Date().getFullYear(), new Date().getMonth(), 1), // First day of current month
+      fechaFin: new Date(), // Current day,
     },
+    mode: "onSubmit", // Changed to onSubmit to validate when form is submitted
+    // reValidateMode: "onChange", // Re-validate on change after submission
   });
 
-  const { isSubmitting } = form.formState;
+  const { isSubmitting, isValid, isSubmitted } = form.formState;
+
+  // Button should be disabled if:
+  // 1. Form is currently submitting
+  // 2. Form has been submitted at least once AND has errors
+  const isButtonDisabled = isSubmitting || (isSubmitted && !isValid);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Log the transformed data that would be sent to the server
-      const ini = format(data.fechaIni, "yyyy-MM-dd");
-      console.log("Data to submit:", ini);
-      // validatedData.fechaIni will be a string in the format "yyyy-MM-dd"
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        // Log the validation errors
-        console.error("Validation errors:", error.errors);
-      } else {
-        // Handle other errors
-        console.error("Unexpected error:", error);
-      }
-    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Log the transformed data that would be sent to the server
+    const ini = format(data.fechaIni, "yyyy-MM-dd");
+    const fin = format(data.fechaFin, "yyyy-MM-dd");
+    console.log("Dates to submit:", { ini, fin });
   }
 
   return (
@@ -74,6 +78,7 @@ export default function CalendarForm() {
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Fecha Inicio */}
           <FormField
             control={form.control}
             name="fechaIni"
@@ -82,7 +87,7 @@ export default function CalendarForm() {
                 <FormLabel>
                   Fecha de Inicio <span className="text-red-500">*</span>
                 </FormLabel>
-                <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -91,14 +96,9 @@ export default function CalendarForm() {
                           "w-full pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
                         )}
-                        onClick={() => setIsCalendarOpen(true)}
                       >
                         {field.value ? (
-                          field.value instanceof Date ? (
-                            format(field.value, "dd/MM/yyyy")
-                          ) : (
-                            ""
-                          )
+                          format(field.value, "dd/MM/yyyy")
                         ) : (
                           <span>Selecciona una fecha</span>
                         )}
@@ -109,12 +109,8 @@ export default function CalendarForm() {
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
-                      selected={field.value as Date | undefined}
-                      onSelect={(date) => {
-                        field.onChange(date);
-                        // Close the calendar after selection
-                        setIsCalendarOpen(false);
-                      }}
+                      selected={field.value}
+                      onSelect={field.onChange}
                       disabled={(date) => date < new Date("1900-01-01")}
                       initialFocus
                       locale={es}
@@ -126,7 +122,51 @@ export default function CalendarForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {/* Fecha Fin */}
+          <FormField
+            control={form.control}
+            name="fechaFin"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>
+                  Fecha Final <span className="text-red-500">*</span>
+                </FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "dd/MM/yyyy")
+                        ) : (
+                          <span>Selecciona una fecha</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) => date < new Date("1900-01-01")}
+                      initialFocus
+                      locale={es}
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormDescription>Esta es la fecha final.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="w-full" disabled={isButtonDisabled}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

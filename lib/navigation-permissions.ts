@@ -94,6 +94,17 @@ export const navLinks: NavigationLink[] = [
     roles: ["admin"],
     submenu: [{ href: "/admin/usuarios", label: "Usuarios", roles: ["admin"] }],
   },
+  {
+    label: "/DEV",
+    roles: ["admin"],
+    submenu: [
+      {
+        href: "/dev/terminal-export",
+        label: "Terminal Export",
+        roles: ["admin"],
+      },
+    ],
+  },
 ];
 
 // Generate route permissions map from navigation structure

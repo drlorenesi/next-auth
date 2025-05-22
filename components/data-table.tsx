@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   Table,
   TableBody,
@@ -87,43 +87,46 @@ export function DataTable({
   };
 
   // Determine if a value is a number
-  const isNumeric = (value: string): boolean => {
+  const isNumeric = useCallback((value: string): boolean => {
     return !isNaN(Number(value)) && !isNaN(Number.parseFloat(value));
-  };
+  }, []);
 
   // Determine if a value is a date
-  const isDate = (value: string): boolean => {
+  const isDate = useCallback((value: string): boolean => {
     // Simple check for common date formats
     return (
       /^\d{1,2}[/.-]\d{1,2}[/.-]\d{2,4}$/.test(value) ||
       !isNaN(Date.parse(value))
     );
-  };
+  }, []);
 
   // Compare function for sorting
-  const compareValues = (a: string, b: string, isAsc: boolean): number => {
-    // Handle empty values
-    if (a === "" && b === "") return 0;
-    if (a === "") return isAsc ? 1 : -1;
-    if (b === "") return isAsc ? -1 : 1;
+  const compareValues = useCallback(
+    (a: string, b: string, isAsc: boolean): number => {
+      // Handle empty values
+      if (a === "" && b === "") return 0;
+      if (a === "") return isAsc ? 1 : -1;
+      if (b === "") return isAsc ? -1 : 1;
 
-    // Check if values are numeric
-    if (isNumeric(a) && isNumeric(b)) {
-      return isAsc ? Number(a) - Number(b) : Number(b) - Number(a);
-    }
+      // Check if values are numeric
+      if (isNumeric(a) && isNumeric(b)) {
+        return isAsc ? Number(a) - Number(b) : Number(b) - Number(a);
+      }
 
-    // Check if values are dates
-    if (isDate(a) && isDate(b)) {
-      const dateA = new Date(a);
-      const dateB = new Date(b);
-      return isAsc
-        ? dateA.getTime() - dateB.getTime()
-        : dateB.getTime() - dateA.getTime();
-    }
+      // Check if values are dates
+      if (isDate(a) && isDate(b)) {
+        const dateA = new Date(a);
+        const dateB = new Date(b);
+        return isAsc
+          ? dateA.getTime() - dateB.getTime()
+          : dateB.getTime() - dateA.getTime();
+      }
 
-    // Default to string comparison
-    return isAsc ? a.localeCompare(b) : b.localeCompare(a);
-  };
+      // Default to string comparison
+      return isAsc ? a.localeCompare(b) : b.localeCompare(a);
+    },
+    [isNumeric, isDate]
+  );
 
   // Filter rows based on search term
   const filteredRows = useMemo(() => {
@@ -155,7 +158,7 @@ export function DataTable({
       const valueB = rowB[columnIndex] || "";
       return compareValues(valueA, valueB, isAsc);
     });
-  }, [filteredRows, sortState]);
+  }, [filteredRows, sortState, compareValues]);
 
   // Calculate pagination
   const totalPages = useMemo(() => {

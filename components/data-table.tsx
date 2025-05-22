@@ -215,14 +215,14 @@ export function DataTable({
       <div className="w-full flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4 mb-3">
         {/* Menubar - Fixed width on sm screens to match 390px appearance */}
         <div className="w-full sm:w-auto flex justify-center">
-          <div className="w-full max-w-[358px] sm:w-[358px] inline-flex items-center bg-zinc-800 dark:bg-zinc-800 rounded-md h-9 overflow-hidden border border-zinc-700 dark:border-zinc-700">
-            <div className="flex-[1.3] flex items-center justify-center h-full hover:bg-zinc-700 dark:hover:bg-zinc-700 transition-colors">
+          <div className="w-full max-w-[358px] sm:w-[358px] inline-flex items-center bg-zinc-200 dark:bg-zinc-800 rounded-md h-9 overflow-hidden border border-zinc-300 dark:border-zinc-700">
+            <div className="flex-[1.3] flex items-center justify-center h-full hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors">
               <Select
                 value={pageSize.toString()}
                 onValueChange={handlePageSizeChange}
               >
                 <SelectTrigger
-                  className="border-0 bg-transparent text-zinc-50 h-full p-0 min-w-0 w-auto focus:ring-0 focus:ring-offset-0 data-[state=open]:bg-zinc-700"
+                  className="border-0 bg-transparent text-zinc-800 dark:text-zinc-50 h-full p-0 min-w-0 w-auto focus:ring-0 focus:ring-offset-0 data-[state=open]:bg-zinc-300 dark:data-[state=open]:bg-zinc-700"
                   style={{ backgroundColor: "transparent" }}
                 >
                   <span className="flex items-center whitespace-nowrap">
@@ -241,7 +241,7 @@ export function DataTable({
             </div>
 
             <button
-              className="flex-[0.75] flex items-center justify-center h-full text-zinc-50 hover:bg-zinc-700 dark:hover:bg-zinc-700 transition-colors"
+              className="flex-[0.75] flex items-center justify-center h-full text-zinc-800 dark:text-zinc-50 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors"
               onClick={onCopy}
               disabled={!onCopy}
               aria-label="Copy data to clipboard"
@@ -255,7 +255,7 @@ export function DataTable({
             </button>
 
             <button
-              className="flex-[0.95] flex items-center justify-center h-full text-zinc-50 hover:bg-zinc-700 dark:hover:bg-zinc-700 transition-colors"
+              className="flex-[0.95] flex items-center justify-center h-full text-zinc-800 dark:text-zinc-50 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors"
               onClick={onExport}
               disabled={isExporting || !onExport}
               aria-label="Export to Excel"

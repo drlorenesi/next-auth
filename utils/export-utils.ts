@@ -2,11 +2,13 @@
  * Exports data to Excel format
  * @param data The data to export
  * @param fileName The name of the file to download
+ * @param isFiltered Whether the data has been filtered
  * @returns A promise that resolves when the export is complete
  */
 export async function exportToExcel(
   data: { metadata: string[]; headers: string[]; rows: string[][] } | null,
-  fileName: string | null
+  fileName: string | null,
+  isFiltered = false
 ): Promise<void> {
   if (!data) return;
 
@@ -35,11 +37,15 @@ export async function exportToExcel(
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
 
-    // Create download link
+    // Create download link with modified filename if filtered
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${fileName?.split(".")[0] || "data"}_export.xlsx`;
+
+    // Add "_filtered" suffix to filename if data is filtered
+    const baseFileName = fileName?.split(".")[0] || "data";
+    const suffix = isFiltered ? "_filtered" : "";
+    link.download = `${baseFileName}_export${suffix}.xlsx`;
 
     // Trigger download
     document.body.appendChild(link);

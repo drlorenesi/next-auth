@@ -30,6 +30,7 @@ export default function Home() {
   const [isExporting, setIsExporting] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -57,12 +58,37 @@ export default function Home() {
     }
   };
 
+  // Filter data based on search term
+  const filteredData = useMemo(() => {
+    if (!data || !searchTerm.trim()) {
+      return data;
+    }
+
+    const term = searchTerm.toLowerCase();
+    const filteredRows = data.rows.filter((row) =>
+      row.some((cell) => cell.toLowerCase().includes(term))
+    );
+
+    return {
+      ...data,
+      rows: filteredRows,
+    };
+  }, [data, searchTerm]);
+
   const handleExportToExcel = async () => {
     if (!data) return;
 
     setIsExporting(true);
     try {
-      await exportToExcel(data, fileName);
+      // Determine if we're exporting filtered data
+      const isFiltered = searchTerm.trim() !== "";
+
+      // Export either filtered data or all data
+      await exportToExcel(
+        isFiltered ? filteredData : data,
+        fileName,
+        isFiltered
+      );
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to export to Excel"
@@ -76,7 +102,10 @@ export default function Home() {
     if (!data) return;
 
     try {
-      await copyToClipboard(data);
+      // Copy either filtered data or all data based on search term
+      const isFiltered = searchTerm.trim() !== "";
+      await copyToClipboard(isFiltered ? filteredData : data);
+
       // Show success indicator
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
@@ -91,6 +120,7 @@ export default function Home() {
     setData(null);
     setFileName(null);
     setError(null);
+    setSearchTerm("");
 
     // Reset the file input
     const fileInput = document.getElementById(
@@ -112,6 +142,11 @@ export default function Home() {
     if (!data) return 0;
     return countErrors(data.rows, qfColumnIndices);
   }, [data, qfColumnIndices]);
+
+  // Handle search term changes from the DataTable
+  const handleSearchChange = (term: string) => {
+    setSearchTerm(term);
+  };
 
   return (
     <main className="container mx-auto py-4 sm:py-6 md:py-10 px-2 sm:px-4">
@@ -275,6 +310,8 @@ export default function Home() {
                   isExporting={isExporting}
                   isCopied={isCopied}
                   qfColumnIndices={qfColumnIndices}
+                  searchTerm={searchTerm}
+                  onSearchChange={handleSearchChange}
                 />
               </>
             )}

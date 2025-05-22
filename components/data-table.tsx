@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useMemo, useCallback } from "react";
 import {
   Table,
@@ -49,6 +51,8 @@ export interface DataTableProps {
   isCopied?: boolean;
   qfColumnIndices?: { qfIndex: number; dataIndex: number }[];
   className?: string;
+  searchTerm?: string;
+  onSearchChange?: (term: string) => void;
 }
 
 export function DataTable({
@@ -61,8 +65,9 @@ export function DataTable({
   isCopied = false,
   qfColumnIndices = [],
   className,
+  searchTerm = "",
+  onSearchChange,
 }: DataTableProps) {
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [sortState, setSortState] = useState<SortState>({
@@ -187,6 +192,14 @@ export function DataTable({
     setCurrentPage(1); // Reset to first page when changing page size
   };
 
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSearchTerm = e.target.value;
+    if (onSearchChange) {
+      onSearchChange(newSearchTerm);
+    }
+  };
+
   // Check if a cell should be highlighted as an error
   const isCellError = (rowIndex: number, cellIndex: number) => {
     if (!currentData[rowIndex]) return false;
@@ -277,7 +290,7 @@ export function DataTable({
               placeholder="Search data..."
               className="pl-8 h-8 text-xs sm:text-sm w-full"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
             />
           </div>
         </div>

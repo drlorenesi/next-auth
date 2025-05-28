@@ -284,11 +284,11 @@ export function DataTable({
         {/* Search Input - Reduced width at medium screens */}
         <div className="w-full sm:w-[358px] md:w-[280px]">
           <div className="relative w-full">
-            <Search className="absolute left-2.5 top-2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-2.5 top-2 h-4 w-4 text-zinc-400 dark:text-zinc-500" />
             <Input
               type="search"
               placeholder="Search data..."
-              className="pl-8 h-8 text-xs sm:text-sm w-full"
+              className="pl-8 h-8 text-xs sm:text-sm w-full border-zinc-200 dark:border-zinc-800 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600"
               value={searchTerm}
               onChange={handleSearchChange}
             />
@@ -297,15 +297,15 @@ export function DataTable({
       </div>
 
       {/* Data Table */}
-      <div className="w-full overflow-auto border rounded-md">
+      <div className="w-full overflow-auto border border-zinc-200 dark:border-zinc-800 rounded-md">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50">
               {headers.map((header, index) => (
                 <TableHead
                   key={index}
                   className={cn(
-                    "whitespace-nowrap text-xs sm:text-sm py-2.5 cursor-pointer select-none",
+                    "whitespace-nowrap text-xs sm:text-sm py-2.5 cursor-pointer select-none font-medium text-zinc-700 dark:text-zinc-300",
                     header === "QF" && "bg-zinc-100 dark:bg-zinc-900",
                     sortState.column === index && "bg-zinc-200 dark:bg-zinc-800"
                   )}
@@ -330,12 +330,15 @@ export function DataTable({
           <TableBody>
             {currentData.length > 0 ? (
               currentData.map((row, rowIndex) => (
-                <TableRow key={rowIndex}>
+                <TableRow
+                  key={rowIndex}
+                  className="border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50"
+                >
                   {row.map((cell, cellIndex) => (
                     <TableCell
                       key={cellIndex}
                       className={cn(
-                        "text-xs sm:text-sm py-2.5",
+                        "text-xs sm:text-sm py-2.5 text-zinc-700 dark:text-zinc-300",
                         headers[cellIndex] === "QF" &&
                           "bg-zinc-100 dark:bg-zinc-900",
                         isCellError(rowIndex, cellIndex) &&
@@ -350,10 +353,10 @@ export function DataTable({
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="border-zinc-200 dark:border-zinc-800">
                 <TableCell
                   colSpan={headers.length}
-                  className="text-center py-4 text-muted-foreground"
+                  className="text-center py-4 text-zinc-500 dark:text-zinc-400"
                 >
                   {searchTerm
                     ? "No matching results found"
@@ -368,7 +371,7 @@ export function DataTable({
       {/* Table Controls - Bottom Row */}
       <div className="flex flex-row items-center justify-between w-full mt-1.5 pt-1">
         <div className="flex items-center gap-2">
-          <p className="text-xs sm:text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
             {pageSize === -1
               ? `Showing all ${sortedFilteredRows.length} rows`
               : `Showing ${Math.min(
@@ -388,19 +391,19 @@ export function DataTable({
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8"
+              className="h-8 w-8 border-zinc-200 dark:border-zinc-800"
               onClick={() => changePage(currentPage - 1)}
               disabled={currentPage === 1}
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <span className="text-xs sm:text-sm mx-2">
+            <span className="text-xs sm:text-sm mx-2 text-zinc-700 dark:text-zinc-300">
               Page {currentPage} of {totalPages}
             </span>
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8"
+              className="h-8 w-8 border-zinc-200 dark:border-zinc-800"
               onClick={() => changePage(currentPage + 1)}
               disabled={currentPage === totalPages}
             >

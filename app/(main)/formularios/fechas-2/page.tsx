@@ -8,10 +8,12 @@ export default async function DataFetching() {
       <h2 className="text-3xl font-semibold tracking-tight border-b pb-2 first:mt-0">
         Fechas
       </h2>
-      {/* Primera fila: Formulario y Gráfica */}
-      <div className="flex gap-4">
-        <SalesForm />
-        <div className="flex-1">
+      {/* Form and Chart - Side by side on large screens, stacked on small screens */}
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="w-full lg:w-auto lg:flex-shrink-0">
+          <SalesForm />
+        </div>
+        <div className="w-full lg:flex-1 min-w-0">
           <SalesChart />
         </div>
       </div>

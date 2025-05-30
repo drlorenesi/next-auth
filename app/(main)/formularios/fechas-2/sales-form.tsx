@@ -45,7 +45,7 @@ export default function DateForm() {
   }
 
   return (
-    <Card>
+    <Card className="w-[358px] lg:mx-auto">
       <CardHeader>
         <CardTitle>Consultar Ventas</CardTitle>
         <CardDescription>
@@ -59,28 +59,30 @@ export default function DateForm() {
               control={form.control}
               name="fechaInicio"
               render={({ field, fieldState }) => (
-                <FormItem className="space-y-2">
-                  <div className="flex flex-row items-center justify-between gap-4">
-                    <FormLabel htmlFor="fecha-inicio" className="w-32">
+                <FormItem className="space-y-2 w-full">
+                  <div className="flex flex-row items-start gap-4 w-full">
+                    <FormLabel htmlFor="fecha-inicio" className="w-32 pt-2">
                       Fecha Inicio:
                     </FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          id="fecha-inicio"
-                          type="date"
-                          className="w-48 date-input"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                      </div>
-                    </FormControl>
+                    <div className="flex flex-col flex-1 max-w-[192px]">
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            id="fecha-inicio"
+                            type="date"
+                            className="w-full date-input"
+                            {...field}
+                            value={field.value || ""}
+                          />
+                        </div>
+                      </FormControl>
+                      {fieldState.error && (
+                        <FormMessage className="text-right pr-2">
+                          {fieldState.error.message}
+                        </FormMessage>
+                      )}
+                    </div>
                   </div>
-                  {fieldState.error && (
-                    <FormMessage className="ml-32">
-                      {fieldState.error.message}
-                    </FormMessage>
-                  )}
                 </FormItem>
               )}
             />
@@ -88,28 +90,30 @@ export default function DateForm() {
               control={form.control}
               name="fechaFin"
               render={({ field, fieldState }) => (
-                <FormItem className="space-y-2">
-                  <div className="flex flex-row items-center justify-between gap-4">
-                    <FormLabel htmlFor="fecha-fin" className="w-32">
+                <FormItem className="space-y-2 w-full">
+                  <div className="flex flex-row items-start gap-4 w-full">
+                    <FormLabel htmlFor="fecha-fin" className="w-32 pt-2">
                       Fecha Fin:
                     </FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          id="fecha-fin"
-                          type="date"
-                          className="w-48 date-input"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                      </div>
-                    </FormControl>
+                    <div className="flex flex-col flex-1 max-w-[192px]">
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            id="fecha-fin"
+                            type="date"
+                            className="w-full date-input"
+                            {...field}
+                            value={field.value || ""}
+                          />
+                        </div>
+                      </FormControl>
+                      {fieldState.error && (
+                        <FormMessage className="text-right pr-2">
+                          {fieldState.error.message}
+                        </FormMessage>
+                      )}
+                    </div>
                   </div>
-                  {fieldState.error && (
-                    <FormMessage className="ml-32">
-                      {fieldState.error.message}
-                    </FormMessage>
-                  )}
                 </FormItem>
               )}
             />

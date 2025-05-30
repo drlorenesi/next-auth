@@ -5,11 +5,11 @@ export const FECHA_MINIMA = "2016-01-01";
 
 // Función para validar que el año tenga exactamente 4 dígitos
 const validateYearFormat = (dateString: string) => {
-  const [year] = dateString.split('-');
+  const [year] = dateString.split("-");
   return /^\d{4}$/.test(year);
 };
 
-export const DateFormSchema = z
+export const FormSchema = z
   .object({
     fechaInicio: z
       .string()
@@ -34,10 +34,14 @@ export const DateFormSchema = z
         message: `La fecha de finalización no puede ser anterior al 1 de enero de 2016.`,
       }),
   })
-  .refine((data) => validateYearFormat(data.fechaInicio) && validateYearFormat(data.fechaFin), {
-    message: "El formato de fecha no es válido.",
-    path: ["fechaInicio"],
-  })
+  .refine(
+    (data) =>
+      validateYearFormat(data.fechaInicio) && validateYearFormat(data.fechaFin),
+    {
+      message: "El formato de fecha no es válido.",
+      path: ["fechaInicio"],
+    }
+  )
   .refine(
     (data) => {
       const inicio = new Date(data.fechaInicio);
@@ -50,4 +54,4 @@ export const DateFormSchema = z
     }
   );
 
-export type DateFormData = z.infer<typeof DateFormSchema>;
+export type FormData = z.infer<typeof FormSchema>;

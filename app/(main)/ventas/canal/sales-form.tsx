@@ -22,7 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { FormSchema } from "./form-schema";
-import { handleDates } from "./server-actions";
+import { getSalesData } from "./server-actions";
 // import { toast } from "sonner";
 import { getPrimerDiaMes, getFechaHoy } from "@/lib/date-utils";
 import "./date-input.css";
@@ -39,7 +39,7 @@ export default function DateForm() {
   const { isSubmitting } = form.formState;
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const response = await handleDates(data);
+    const response = await getSalesData(data);
     console.log("Response from server action:", response);
   }
 

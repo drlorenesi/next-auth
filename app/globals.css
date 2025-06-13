@@ -119,4 +119,12 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Date Input Styles */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute !important;
+    right: 0.5rem !important;
+    padding: 0.25rem !important;
+    cursor: pointer !important;
+  }
 }

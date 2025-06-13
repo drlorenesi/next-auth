@@ -1,26 +1,27 @@
-export default function Producto() {
+import SalesForm from "./date-form";
+
+export default async function DataFetching() {
   return (
     <div className="space-y-4">
       <h2 className="text-3xl font-semibold tracking-tight border-b pb-2 first:mt-0">
         Ventas por Producto
       </h2>
-      {/* <h2 className="text-3xl font-semibold tracking-tight scroll-m-20 mb-6 border-b pb-2 first:mt-0">
-            Next.js Forms
-          </h2> */}
       <div className="space-y-2">
         <p className="text-sm text-muted-foreground">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis soluta
-          voluptate magnam tempore dolorum explicabo esse aut. Nostrum culpa
-          reiciendis ipsum repudiandae asperiores beatae obcaecati! Illo
-          inventore delectus hic consectetur?
-        </p>
-        <p className="leading-7 [&:not(:first-child)]:mt-6">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat
-          tenetur est eligendi, et ab voluptate unde dolorum perspiciatis.
-          Doloribus dolor autem similique delectus alias! Accusantium, sit! Unde
-          id laboriosam iure!
+          Consulta información de ventas por rango de fechas
         </p>
       </div>
+      {/* Form and Chart - Side by side on large screens, stacked on small screens */}
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="w-full lg:w-auto lg:flex-shrink-0">
+          <SalesForm />
+        </div>
+        <div className="w-full lg:flex-1 min-w-0">
+          <p>Chart will be rendered here</p>
+        </div>
+      </div>
+      {/* Segunda fila: Tabla de datos */}
+      <p>Detail will be rendered here</p>
     </div>
   );
 }

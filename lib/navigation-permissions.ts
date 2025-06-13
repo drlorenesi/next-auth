@@ -26,13 +26,13 @@ export const navLinks: NavigationLink[] = [
     submenu: [
       { href: "/ventas/canal", label: "Por Canal", roles: ["admin", "ventas"] },
       {
-        href: "/ventas/producto",
-        label: "Por Producto",
+        href: "/ventas/categoria",
+        label: "Por Categoría",
         roles: ["admin", "ventas"],
       },
       {
-        href: "/ventas/categoria",
-        label: "Por Categoría",
+        href: "/ventas/producto",
+        label: "Por Producto",
         roles: ["admin", "ventas"],
       },
       {

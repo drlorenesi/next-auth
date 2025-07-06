@@ -1,0 +1,74 @@
+[
+  {
+    "Canal": "MAYOREO CAPITAL",
+    "Ventas sIVA": 3878222.62,
+    "NC Descuento sIVA": 83893.53,
+    "NC Devolucion sIVA": 11545.54
+  },
+  {
+    "Canal": "RUTEO CAPITAL",
+    "Ventas sIVA": 2553646.34,
+    "NC Descuento sIVA": 0.0,
+    "NC Devolucion sIVA": 1000.71
+  },
+  {
+    "Canal": "RUTEO ORIENTE",
+    "Ventas sIVA": 69448.82,
+    "NC Descuento sIVA": 0.0,
+    "NC Devolucion sIVA": 0.0
+  },
+  {
+    "Canal": "MAYOREO OCCIDENTE",
+    "Ventas sIVA": 1884398.5,
+    "NC Descuento sIVA": 8176.3,
+    "NC Devolucion sIVA": 0.0
+  },
+  {
+    "Canal": "RUTEO OCCIDENTE",
+    "Ventas sIVA": 81456.45,
+    "NC Descuento sIVA": 0.0,
+    "NC Devolucion sIVA": 0.0
+  },
+  {
+    "Canal": "CANAL MODERNO",
+    "Ventas sIVA": 1232518.83,
+    "NC Descuento sIVA": 23792.57,
+    "NC Devolucion sIVA": 12567.48
+  },
+  {
+    "Canal": "INDUSTRIAL",
+    "Ventas sIVA": 267239.04,
+    "NC Descuento sIVA": 189.73,
+    "NC Devolucion sIVA": 5357.14
+  },
+  {
+    "Canal": "EXPORTACION",
+    "Ventas sIVA": 1050464.37,
+    "NC Descuento sIVA": 23350.95,
+    "NC Devolucion sIVA": 0.0
+  },
+  {
+    "Canal": "VENTA DIRECTA",
+    "Ventas sIVA": 26559.39,
+    "NC Descuento sIVA": 0.0,
+    "NC Devolucion sIVA": 11216.52
+  },
+  {
+    "Canal": "TIENDA",
+    "Ventas sIVA": 212862.39,
+    "NC Descuento sIVA": 0.0,
+    "NC Devolucion sIVA": 0.0
+  },
+  {
+    "Canal": "MERCADEO",
+    "Ventas sIVA": 15295.79,
+    "NC Descuento sIVA": 0.0,
+    "NC Devolucion sIVA": 0.0
+  },
+  {
+    "Canal": "MAYOREO ORIENTE",
+    "Ventas sIVA": 2134348.15,
+    "NC Descuento sIVA": 13534.91,
+    "NC Devolucion sIVA": 48.21
+  }
+]

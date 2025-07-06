@@ -1,6 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import { AlertCircle, X } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import SalesForm from "./date-form";
 
 export default function DataFetching() {
@@ -12,7 +14,9 @@ export default function DataFetching() {
       setFormSubmitted(true);
       setError(null);
     } else {
-      setError(errorMessage || 'An error occurred while processing your request');
+      setError(
+        errorMessage || "An error occurred while processing your request"
+      );
       setFormSubmitted(false);
     }
   };
@@ -27,9 +31,18 @@ export default function DataFetching() {
           Consulta información de ventas por rango de fechas
         </p>
         {error && (
-          <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-            <span className="font-medium">Error!</span> {error}
-          </div>
+          <Alert variant="destructive" className="relative">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+            <button
+              onClick={() => setError(null)}
+              className="absolute top-2 right-2 p-1 cursor-pointer"
+              aria-label="Close alert"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </Alert>
         )}
       </div>
       {/* Form and Chart - Side by side on large screens, stacked on small screens */}

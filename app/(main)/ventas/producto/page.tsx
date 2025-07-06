@@ -26,7 +26,6 @@ import { FormSchema } from "./form-schema";
 import { fetchSalesData } from "./actions";
 import { toast } from "sonner";
 import { getPrimerDiaMes, getFechaHoy } from "@/lib/date-utils";
-import { Chart } from "./chart-pie";
 
 export type SalesData = {
   Canal: string;
@@ -166,7 +165,7 @@ export default function VentasProducto() {
         </div>
 
         <div className="w-full lg:flex-1 min-w-0">
-          {data ? <Chart data={data} /> : null}
+          {data ? <p>Chart will be rendered here</p> : null}
         </div>
       </div>
       {data ? <p>Detail will be rendered here</p> : null}

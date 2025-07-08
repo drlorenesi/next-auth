@@ -26,13 +26,15 @@ import { FormSchema } from "./form-schema";
 import { fetchSalesData } from "./actions";
 import { toast } from "sonner";
 import { getPrimerDiaMes, getFechaHoy } from "@/lib/date-utils";
+import { SalesPieChart } from "./pie-chart"; // Uncomment if you have a chart component
+import { SummaryTable } from "./summary-table";
 
-export type SalesData = {
-  Canal: string;
-  "Ventas sIVA": number;
-  "NC Descuento sIVA": number;
-  "NC Devolucion sIVA": number;
-}[];
+export type SalesData = Array<{
+  canal: string;
+  ventas_siva: number;
+  nc_descuento_siva: number;
+  nc_devolucion_siva: number;
+}>;
 
 export default function VentasProducto() {
   const [data, setData] = useState<SalesData | undefined>(undefined);
@@ -165,10 +167,10 @@ export default function VentasProducto() {
         </div>
 
         <div className="w-full lg:flex-1 min-w-0">
-          {data ? <p>Chart will be rendered here</p> : null}
+          {data ? <SalesPieChart data={data} /> : null}
         </div>
       </div>
-      {data ? <p>Detail will be rendered here</p> : null}
+      {data ? <SummaryTable data={data} /> : null}
     </div>
   );
 }

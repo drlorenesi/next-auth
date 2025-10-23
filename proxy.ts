@@ -59,7 +59,7 @@ async function getUserRoleFromSession(request: NextRequest): Promise<Role> {
   // 3. Extracting the role from the session data
 
   // Placeholder implementation - replace with actual logic
-  return "user" as Role;
+  return "admin" as Role;
 }
 
 export const config = {

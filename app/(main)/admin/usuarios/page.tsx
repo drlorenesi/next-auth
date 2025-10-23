@@ -14,7 +14,7 @@ export default function General() {
           reiciendis ipsum repudiandae asperiores beatae obcaecati! Illo
           inventore delectus hic consectetur?
         </p>
-        <p className="leading-7 [&:not(:first-child)]:mt-6">
+        <p className="leading-7 not-first:mt-6">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat
           tenetur est eligendi, et ab voluptate unde dolorum perspiciatis.
           Doloribus dolor autem similique delectus alias! Accusantium, sit! Unde

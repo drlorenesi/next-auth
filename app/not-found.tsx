@@ -15,7 +15,7 @@ export default async function NotFound() {
   return (
     <>
       <Header session={session} />
-      <main className="flex flex-col flex-grow mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8 py-4">
+      <main className="flex flex-col grow mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
           <div className="relative">
             {/* Decorative elements */}

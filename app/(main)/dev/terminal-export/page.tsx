@@ -248,7 +248,7 @@ export default function Home() {
                           {data.metadata.map((line, index) => (
                             <p
                               key={index}
-                              className="font-mono text-xs sm:text-sm break-words text-zinc-700 dark:text-zinc-300"
+                              className="font-mono text-xs sm:text-sm wrap-break-words text-zinc-700 dark:text-zinc-300"
                             >
                               {line}
                             </p>
@@ -300,7 +300,7 @@ export default function Home() {
                         </p>
                         <div className="mt-3 p-2 border border-amber-200 bg-amber-50/50 dark:bg-amber-950/30 dark:border-amber-900/50 rounded">
                           <p className="flex items-start text-amber-800 dark:text-amber-300">
-                            <AlertTriangle className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
+                            <AlertTriangle className="h-4 w-4 mr-2 mt-0.5 shrink-0" />
                             <span>
                               The QF columns indicate that the data was saved
                               correctly if the value is 0.

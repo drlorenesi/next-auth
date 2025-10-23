@@ -24,11 +24,17 @@ Este repositorio contiene una aplicación Next.js que sirve como base para proye
 
 ## Variables de entorno
 
-Configura un archivo `.env.local` en la raíz del proyecto con las variables necesarias para la conexión a MySQL. Ejemplo:
+Configura un archivo `.env` en la raíz del proyecto con las variables necesarias para la conexión a MySQL. Ejemplo:
 
 ```env
-DATABASE_URL=mysql://usuario:password@localhost:3306/nombre_base
-NEXT_PUBLIC_APP_NAME=MiApp
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app
+
+MYSQL_HOST=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_DATABASE=
+MYSQL_PORT=
 ```
 
 ## Instalación y ejecución local

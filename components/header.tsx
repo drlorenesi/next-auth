@@ -13,7 +13,7 @@ import { getFilteredNavigation } from "@/lib/navigation-permissions";
 
 export function Header({ session }: { session: Session | null }) {
   // Get user role from DB or authentication metadata
-  // const userRole: Role | undefined = "admin"; // Example role, replace with actual logic
+  // const userRole: Role | undefined = "user"; // Example role, replace with actual logic
   const userRole = session?.user?.role as Role | null;
   // Memoize the filtered navigation to prevent unnecessary re-renders
   const filteredNavLinks = useMemo(

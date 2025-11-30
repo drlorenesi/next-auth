@@ -1,10 +1,13 @@
 import { betterAuth } from "better-auth";
 import { admin } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
-import { pool } from "./database";
+// import { pool } from "./database";
+import { Pool } from "pg";
 
 export const auth = betterAuth({
-  database: pool,
+  database: new Pool({
+    connectionString: process.env.DATABASE_URL,
+  }),
   user: {
     additionalFields: {
       firstName: { type: "string", length: 255, nullable: false },
@@ -16,7 +19,6 @@ export const auth = betterAuth({
     minPasswordLength: 6,
     requireEmailVerification: true,
   },
-  autoSignIn: false, // possibly not needed with email verification
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: false,

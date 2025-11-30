@@ -1,4 +1,6 @@
+-- --------------------------------------------------------------------------------------
 -- 1. DATABASE CREATION
+-- --------------------------------------------------------------------------------------
 -- Note: It's generally best practice to manage the database creation outside the application
 -- and only grant table-level privileges, but this script includes it for completeness.
 
@@ -130,7 +132,3 @@ DELIMITER ;
 -- --------------------------------------------------------------------------------------
 -- 5. OTHER QUERYS 
 -- --------------------------------------------------------------------------------------
-
--- Alter table
-ALTER TABLE `user`
-ADD COLUMN `name` varchar(255) NOT NULL;
